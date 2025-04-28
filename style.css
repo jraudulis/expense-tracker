@@ -1,0 +1,145 @@
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* General Layout */
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    width: 100%;
+    max-width: 600px;
+    border-radius: 20px;
+    padding: 30px 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header */
+  header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  header h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #222;
+  }
+  
+  .budget-display {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .budget-display p {
+    font-size: 0.95rem;
+    color: #777;
+  }
+  
+  .budget-display h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #111;
+  }
+  
+  /* Add Expense Section */
+  .add-expense {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .add-expense input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: #fff;
+  }
+  
+  .add-expense button {
+    padding: 12px 18px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .add-expense button:hover {
+    background: #333;
+  }
+  
+  /* Expense List */
+  .expense-list {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .expense-list h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #222;
+  }
+  
+  .expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+  }
+  
+  .expense-name {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .expense-amount {
+    font-weight: 600;
+    color: #e53935;
+  }
+  
+  /* Responsive */
+  @media (max-width: 480px) {
+    .container {
+      padding: 20px 15px;
+    }
+  
+    .add-expense input {
+      font-size: 0.9rem;
+    }
+  
+    .add-expense button {
+      font-size: 0.9rem;
+    }
+  }
+  
