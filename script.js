@@ -5,6 +5,7 @@ const addBudgetBtn = document.getElementById('add-budget');
 const expenseNameInput = document.getElementById('expense-name');
 const expenseAmountInput = document.getElementById('expense-amount');
 const addExpenseBtn = document.getElementById('add-expense');
+const expenseListContainer = document.getElementById('expense-list');
 
 let startingBudget = 0;
 let expenses = [];
@@ -35,8 +36,8 @@ function addExpenses () {
         alert('Enter expense name and valid ammount');
     } else {
         let expenseObj = {
-            name: `${expenseName}`,
-            amount: `${expenseAmount}`
+            name: expenseName,
+            amount: expenseAmount
         }
 
         expenses.push(expenseObj);
@@ -48,8 +49,26 @@ function addExpenses () {
 }
 
 function updateExpenseList() {
+    expenseListContainer.innerHTML = '';
+
     expenses.forEach((expense) =>{
-        console.log(expense.name, expense.amount);
+
+        const div = document.createElement('div');
+        div.classList.add('expense-item');
+
+        const expenseListName = document.createElement('span');
+        expenseListName.classList.add('expense-name');
+        expenseListName.appendChild(document.createTextNode(expense.name));
+
+        const expenseListAmount = document.createElement('span');
+        expenseListAmount.classList.add('expense-amount');
+        expenseListAmount.appendChild(document.createTextNode('- ' + convertToCurrency(expense.amount)));
+
+        div.appendChild(expenseListName);
+        div.appendChild(expenseListAmount);
+
+        expenseListContainer.appendChild(div);
+
     })
 }
 
