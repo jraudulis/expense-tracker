@@ -132,6 +132,18 @@
     color: #e53935;
   }
 
+  .total {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .total-name{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
   .toast {
     position: fixed;
     bottom: 50px;

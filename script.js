@@ -18,6 +18,34 @@ function convertToCurrency(number) {
     return number.toLocaleString("en-GB", {style:"currency", currency:"GBP"});
 }
 
+function createTotalSpentDiv() {
+
+    const totalElement = document.querySelector('.total');
+
+    if ( !totalElement ) {
+        const div = document.createElement('div');
+    div.classList.add('expense-item');
+
+    const title = document.createElement('span');
+    title.classList.add('total-name');
+    title.appendChild(document.createTextNode('Total Spent'));
+
+    let total = document.createElement('span');
+    total.classList.add('total');
+    total.appendChild(document.createTextNode('100'));
+
+    div.appendChild(title);
+    div.appendChild(total);
+    expenseListContainer.appendChild(div);
+
+    }
+}
+
+function calculateTotalSpent(amount) {
+    const totalSpent = document.querySelector('.total');
+    totalSpent.textContent = convertToCurrency(amount);
+}
+
 // Add budget amount and after UI update hide input field
 function addBudget() {
     startingBudget = Number(startBudgetInput.value);
@@ -65,6 +93,7 @@ function subtractFromBalance() {
     // Use reduce method to itirate over array and sum all the expeneses and subtract from the balance
     const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
     const remainingBalanceValue = startingBudget - totalExpenses;
+    calculateTotalSpent(totalExpenses);
     // update UI with new balance value
     remainingBalance.textContent = convertToCurrency(remainingBalanceValue);
 }
@@ -72,6 +101,8 @@ function subtractFromBalance() {
 // Add items to list with time stamp and deducdet amount
 function updateExpenseList() {
     expenseListContainer.innerHTML = '';
+
+    createTotalSpentDiv();
 // loop over expense array and extract name and amount values
     expenses.forEach((expense) =>{
         // create dive element which wille be populated with name, timestamp and deducted amount spans
@@ -91,7 +122,6 @@ function updateExpenseList() {
         expenseListContainer.appendChild(div);
 
     });
-
     // function call after loop to do the math for remaining balance based on added expense
     subtractFromBalance();
 }
