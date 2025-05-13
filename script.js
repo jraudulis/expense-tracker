@@ -32,7 +32,7 @@ function createTotalSpentDiv() {
 
     let total = document.createElement('span');
     total.classList.add('total');
-    total.appendChild(document.createTextNode('100'));
+    total.appendChild(document.createTextNode(0));
 
     div.appendChild(title);
     div.appendChild(total);
@@ -60,6 +60,10 @@ function addBudget() {
     }
 }
 
+function displayBalanceAlert() {
+
+}
+
 // Add expense name and amount and push to array where it's stored
 function addExpenses () {
     let expenseName = expenseNameInput.value;
@@ -85,7 +89,6 @@ function addExpenses () {
 
         updateExpenseList();
     }
-    console.log(expenses);
 }
 
 function subtractFromBalance() {
@@ -94,6 +97,10 @@ function subtractFromBalance() {
     const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
     const remainingBalanceValue = startingBudget - totalExpenses;
     calculateTotalSpent(totalExpenses);
+
+    if ( totalExpenses > startingBudget / 2) {
+        displayErrorMessage('You have spent 50% of your budget');
+    }
     // update UI with new balance value
     remainingBalance.textContent = convertToCurrency(remainingBalanceValue);
 }
@@ -103,9 +110,9 @@ function updateExpenseList() {
     expenseListContainer.innerHTML = '';
 
     createTotalSpentDiv();
-// loop over expense array and extract name and amount values
-    expenses.forEach((expense) =>{
-        // create dive element which wille be populated with name, timestamp and deducted amount spans
+// loop over expense array in reversed order to display newest item at top of the list and extract name and amount values
+    expenses.slice().reverse().forEach((expense) =>{
+        // create dive element which will be populated with name, timestamp and deducted amount spans
         const div = document.createElement('div');
         div.classList.add('expense-item');
         // Name and timestamp span
