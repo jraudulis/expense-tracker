@@ -12,6 +12,8 @@ const expenseListContainer = document.getElementById('expense-list');
 // Global variables
 let startingBudget = 0;
 let expenses = [];
+let hasWarnedOverHalf = false;
+let hasWarnedNegative = false;
 
 // Function for number convertion tu currency
 function convertToCurrency(number) {
@@ -98,8 +100,12 @@ function subtractFromBalance() {
     const remainingBalanceValue = startingBudget - totalExpenses;
     calculateTotalSpent(totalExpenses);
 
-    if ( totalExpenses > startingBudget / 2) {
+    if ( totalExpenses > startingBudget / 2 && !hasWarnedOverHalf ) {
         displayErrorMessage('You have spent 50% of your budget');
+        hasWarnedOverHalf = true;
+    } else if ( remainingBalanceValue < 0 && !hasWarnedNegative ) {
+        displayErrorMessage('You have overspent your budget');
+        hasWarnedNegative = true;
     }
     // update UI with new balance value
     remainingBalance.textContent = convertToCurrency(remainingBalanceValue);
