@@ -1,7 +1,9 @@
 const container = document.getElementById('container');
 const startBudgetUi = document.getElementById('starting-budget');
 const addBudgetContainer = document.querySelector('.budget');
+const balanceContainer = document.querySelector('.balance-container');
 const remainingBalance = document.getElementById('remaining-balance');
+const budgetBar = document.getElementById('budget-bar');
 const startBudgetInput = document.getElementById('starting-budget-input');
 const addBudgetBtn = document.getElementById('add-budget');
 const expenseNameInput = document.getElementById('expense-name');
@@ -34,7 +36,7 @@ function createTotalSpentDiv() {
 
     let total = document.createElement('span');
     total.classList.add('total');
-    total.appendChild(document.createTextNode(0));
+    total.appendChild(document.createTextNode(convertToCurrency(0)));
 
     div.appendChild(title);
     div.appendChild(total);
@@ -60,10 +62,6 @@ function addBudget() {
         startBudgetInput.value = '';
         addBudgetContainer.style.display = 'none';
     }
-}
-
-function displayBalanceAlert() {
-
 }
 
 // Add expense name and amount and push to array where it's stored
@@ -93,6 +91,13 @@ function addExpenses () {
     }
 }
 
+function updateBudgetBar(){
+    
+    const budgetBarPercentage = (remainingBalance.value/ startingBudget.value) * 100;
+    console.log(budgetBarPercentage);
+    budgetBar.style.width = `${budgetBarPercentage}%`
+}
+
 function subtractFromBalance() {
 
     // Use reduce method to itirate over array and sum all the expeneses and subtract from the balance
@@ -100,12 +105,12 @@ function subtractFromBalance() {
     const remainingBalanceValue = startingBudget - totalExpenses;
     calculateTotalSpent(totalExpenses);
 
-    if ( totalExpenses > startingBudget / 2 && !hasWarnedOverHalf ) {
-        displayErrorMessage('You have spent 50% of your budget');
-        hasWarnedOverHalf = true;
-    } else if ( remainingBalanceValue < 0 && !hasWarnedNegative ) {
+    if ( remainingBalanceValue < 0 && !hasWarnedNegative ) {
         displayErrorMessage('You have overspent your budget');
         hasWarnedNegative = true;
+    } else if (  totalExpenses > startingBudget / 2 && !hasWarnedOverHalf  ) {
+        displayErrorMessage('You have overspent your budget');
+        hasWarnedOverHalf = true;
     }
     // update UI with new balance value
     remainingBalance.textContent = convertToCurrency(remainingBalanceValue);
