@@ -4,8 +4,10 @@ const addBudgetContainer = document.querySelector('.budget');
 const balanceContainer = document.querySelector('.balance-container');
 const remainingBalance = document.getElementById('remaining-balance');
 const budgetBar = document.getElementById('budget-bar');
+const budgetBarContainer = document.querySelector('.budget-bar-container');
 const startBudgetInput = document.getElementById('starting-budget-input');
 const addBudgetBtn = document.getElementById('add-budget');
+const resetBtn = document.getElementById('reset');
 const expenseNameInput = document.getElementById('expense-name');
 const expenseAmountInput = document.getElementById('expense-amount');
 const addExpenseBtn = document.getElementById('add-expense');
@@ -91,11 +93,23 @@ function addExpenses () {
     }
 }
 
-function updateBudgetBar(){
+function updateBudgetBar(balance){
     
-    const budgetBarPercentage = (remainingBalance.value/ startingBudget.value) * 100;
-    console.log(budgetBarPercentage);
+    const budgetBarPercentage = ( balance / startingBudget) * 100;
     budgetBar.style.width = `${budgetBarPercentage}%`
+
+    if ( budgetBarPercentage <= 0 ) {
+        budgetBar.style.width = '100%';
+        budgetBar.style.backgroundColor = '#EF4444';
+        return;
+    } else if ( budgetBarPercentage < 30 ) {
+        budgetBar.style.backgroundColor = '#EF4444';
+    } else if ( budgetBarPercentage < 50 ) {
+        budgetBar.style.backgroundColor = '#FACC15'
+    } else {
+        budgetBar.style.backgroundColor = '#22C55E'
+    }
+
 }
 
 function subtractFromBalance() {
@@ -109,11 +123,12 @@ function subtractFromBalance() {
         displayErrorMessage('You have overspent your budget');
         hasWarnedNegative = true;
     } else if (  totalExpenses > startingBudget / 2 && !hasWarnedOverHalf  ) {
-        displayErrorMessage('You have overspent your budget');
+        displayErrorMessage('You have spent half of your budget');
         hasWarnedOverHalf = true;
     }
     // update UI with new balance value
     remainingBalance.textContent = convertToCurrency(remainingBalanceValue);
+    updateBudgetBar(remainingBalanceValue);
 }
 
 // Add items to list with time stamp and deducdet amount
@@ -166,9 +181,16 @@ function displayErrorMessage(error) {
     }, 3000); 
 }
 
+function resetApp(){
+    startBudgetUi.textContent = '0.00';
+    remainingBalance.textContent = '0.00';
 
+    expenses.length = 0;
+    expenseListContainer.innerHTML = '';
+}
 
 
 
 addBudgetBtn.addEventListener('click', addBudget);
 addExpenseBtn.addEventListener('click', addExpenses);
+resetBtn.addEventListener('click', resetApp);

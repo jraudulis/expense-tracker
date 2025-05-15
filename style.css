@@ -38,7 +38,6 @@
   header {
     width: 100%;
     text-align: center;
-    margin-bottom: 30px;
   }
   
   header h1 {
@@ -121,7 +120,7 @@
     background: #fff;
   }
   
-  .add-expense button {
+   button {
     padding: 12px 18px;
     background: #111;
     color: #fff;
@@ -132,8 +131,12 @@
     transition: background 0.3s ease;
   }
   
-  .add-expense button:hover {
+   button:hover {
     background: #333;
+  }
+
+  #reset {
+
   }
   
   /* Expense List */
