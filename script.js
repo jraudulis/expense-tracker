@@ -15,6 +15,7 @@ const expenseListContainer = document.getElementById('expense-list');
 
 // Global variables
 let startingBudget = 0;
+let balance
 let expenses = [];
 let hasWarnedOverHalf = false;
 let hasWarnedNegative = false;
@@ -78,7 +79,13 @@ function addExpenses () {
     } else if ( expenseName === '' || expenseAmount <= 0 || isNaN(expenseAmount) ) {
         return displayErrorMessage('Please enter expense name and amount');
         
-    } else {
+    } else if ( balance <= 0) {
+       let confirmation = confirm('You are away to overspend your budget and have negative balance');
+       if ( confirmation === false) {
+          return;
+       }
+    }
+      else {
         let expenseObj = {
             name: expenseName,
             amount: expenseAmount,
@@ -118,6 +125,7 @@ function subtractFromBalance() {
     const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
     const remainingBalanceValue = startingBudget - totalExpenses;
     calculateTotalSpent(totalExpenses);
+    balance = remainingBalanceValue;
 
     if ( remainingBalanceValue < 0 && !hasWarnedNegative ) {
         displayErrorMessage('You have overspent your budget');
@@ -182,11 +190,17 @@ function displayErrorMessage(error) {
 }
 
 function resetApp(){
-    startBudgetUi.textContent = '0.00';
-    remainingBalance.textContent = '0.00';
+    startingBudget = 0;
+    startBudgetUi.textContent = convertToCurrency(0);
+    remainingBalance.textContent = convertToCurrency(0);
 
     expenses.length = 0;
     expenseListContainer.innerHTML = '';
+    budgetBar.style.width = '0%';
+    budgetBar.style.backgroundColor = '';
+    addBudgetContainer.style.display = 'flex';
+    hasWarnedOverHalf = false;
+    hasWarnedNegative = false;
 }
 
 

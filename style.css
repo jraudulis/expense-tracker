@@ -119,6 +119,10 @@
     font-size: 1rem;
     background: #fff;
   }
+
+  #expense-amount {
+    width: 20%;
+  }
   
    button {
     padding: 12px 18px;
@@ -136,7 +140,7 @@
   }
 
   #reset {
-
+    background-color: #f44336;
   }
   
   /* Expense List */
